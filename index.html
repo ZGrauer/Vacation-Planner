@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Catalog">
+    <title class="name" data-bind="text: pageTitle"></title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" defer></script>
+    <script src="js/bootstrap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.1/knockout-min.js" defer></script>
+    <script src="js/models/location.js" defer></script>
+    <script src="js/viewmodels/app.js" defer></script>
+    <script src="js/google.js" defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB_AMvD-EHQYqW9nSE-0MXaKSVCi64ri94&callback=initMap" async defer></script>
+</head>
+
+<body class="container-fluid">
+    <header>
+        <div class="row">
+            <div class="col-xs-12 text-center">
+                <h1 data-bind="text: pageTitle"></h1>
+            </div>
+        </div>
+    </header>
+
+        <div class="col-xs-3 col-lg-2 list-group location-list" >
+            <h2 class="loc-list">Locations</h2>
+            <div class="input-group">
+                <div class="input-group-addon"><span class="glyphicon glyphicon-filter"></span></div>
+                <input type="text" id="txt-filter" data-bind="textInput : currentFilter" class="form-control" />
+                <span class="input-group-addon" data-bind="click: clearFilter.bind($data,locations)"><span class="glyphicon glyphicon-remove"></span></span>
+            </div>
+            <div data-bind="foreach: filterLocations">
+                <a href="#" class="list-group-item list-group-item-action" data-bind="click: function(){$parent.clickMarker($data)}">
+                   <span data-bind="text: name"></span>
+               </a>
+            </div>
+        </div>
+
+    <div id="map"></div>
+</body>
+</html>

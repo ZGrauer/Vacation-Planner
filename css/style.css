@@ -1,0 +1,133 @@
+/* Header */
+
+header {
+    background-color: hsla(235, 21%, 21%, 1);
+    color: hsla(197, 24%, 94%, 1);
+    padding: 0 20px;
+    position: absolute;
+    top: 0;
+    z-index: 9999;
+}
+
+.title {
+    font-size: 50px;
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+    letter-spacing: 3px;
+    color: hsla(197, 24%, 94%, 1);
+}
+
+.loc-list {
+    font-size: 26px;
+    font-family: "Roboto", sans-serif;
+    letter-spacing: 2px;
+}
+
+
+/* Main Content Size, Padding, Margins */
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-size: 16px;
+    font-family: "Roboto", sans-serif;
+    font-weight: 300;
+    /*color: #eee;*/
+    background-color: hsla(197, 24%, 94%, 1);
+}
+
+.location-list {
+    position: absolute;
+    top: 100px;
+    z-index: 9999;
+    background-color: hsla(197, 24%, 94%, 1);
+}
+
+#map-div {
+    padding: 0 0 10px 0;
+    margin: 10px;
+}
+
+#map {
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+
+/* image hover overlay */
+
+.hov-img-container {
+    position: relative;
+}
+
+.modal-img {
+    width: 100%;
+    vertical-align: top;
+    opacity: 1;
+    transition: .5s ease;
+    backface-visibility: hidden;
+}
+
+.hov-middle {
+    transition: .5s ease;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%)
+}
+
+.hov-img-container:hover .modal-img {
+    opacity: 0.6;
+}
+
+.hov-img-container:hover .hov-middle {
+    opacity: 1;
+}
+
+
+/* Colors */
+
+a.list-group-item, button.list-group-item {
+    color: #000;
+    background-color: hsla(197, 24%, 94%, 1);
+}
+
+
+/* Media Queries */
+
+@media only screen and (max-width: 600px) {
+    .title {
+        font-size: 36px;
+        letter-spacing: 3px;
+    }
+    .user-img {
+        width: 50px;
+        height: 50px;
+    }
+    #btn-home, #btn-login {
+        padding: 8px 16px;
+        font-size: 16px;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .title {
+        font-size: 32px;
+        letter-spacing: 2px;
+    }
+    .user-img {
+        width: 30px;
+        height: 30px;
+    }
+    #btn-home, #btn-login {
+        padding: 6px 10px;
+        font-size: 16px;
+    }
+}

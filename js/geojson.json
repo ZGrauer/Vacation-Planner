@@ -1,0 +1,148 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -115.17675541341305,
+          36.112500637951186
+        ]
+      },
+      "properties": {
+          "name": "test"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -115.17452381551266,
+          36.11617553449072
+        ]
+      },
+      "properties": {
+          "name": "test"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -115.1696314662695,
+          36.12120223708309
+        ]
+      },
+      "properties": {
+          "name": "test"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -115.17207764089108,
+          36.12480739799827
+        ]
+      },
+      "properties": {
+          "name": "test"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -115.15602730214596,
+          36.14723193962685
+        ]
+      },
+      "properties": {
+          "name": "test"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -115.17911575734615,
+          36.071891990227066
+        ]
+      },
+      "properties": {
+          "name": "test"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -115.1513297483325,
+          36.107664073356275
+        ]
+      },
+      "properties": {
+          "name": "test"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -115.1537973806262,
+          36.10880823380997
+        ]
+      },
+      "properties": {
+          "name": "test"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -115.17023395746946,
+          36.102549819121215
+        ]
+      },
+      "properties": {
+          "name": "test"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -115.17454694956541,
+          36.10234177461357
+        ]
+      },
+      "properties": {
+          "name": "test"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -115.17066143453121,
+          36.11256997721347
+        ]
+      },
+      "properties": {
+          "name": "test"
+      }
+    }
+  ]
+}
