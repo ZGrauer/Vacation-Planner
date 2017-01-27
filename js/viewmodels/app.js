@@ -3,7 +3,7 @@ var ViewModel = function() {
 
     self.locations = ko.observableArray([]);
     self.currentFilter = ko.observable("");
-    self.pageTitle = ko.observable("Neighboorhood Map");
+    self.pageTitle = ko.observable("Vacation Planner Map");
 
     self.clickMarker = function(marker) {
         google.maps.event.trigger(marker, 'click');
@@ -53,3 +53,26 @@ function loadLocations() {
         }
     }
 };
+
+// When the DOM is ready set the glyphicon for collapse button
+$(document).ready(function() {
+    // Change button text based on hidding or showing the div
+    $("#location-div").on("hide.bs.collapse", function() {
+        $("#collapse-btn").html('<span class="glyphicon glyphicon-collapse-down"></span> Open');
+    });
+    $("#location-div").on("show.bs.collapse", function() {
+        $("#collapse-btn").html('<span class="glyphicon glyphicon-collapse-up"></span> Close');
+    });
+    // Set a listener on the width for small
+    if (matchMedia) {
+        var mediaQuery = window.matchMedia("(max-width: 768px)");
+        mediaQuery.addListener(WidthChange);
+        WidthChange(mediaQuery);
+    }
+    // Hide the locations div when the screen is 768px or less
+    function WidthChange(mediaQuery) {
+        if (mediaQuery.matches) {
+            $("#location-div").removeClass("in");
+        }
+    }
+});
