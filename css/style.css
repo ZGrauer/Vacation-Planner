@@ -59,44 +59,10 @@ body {
 }
 
 
-/* image hover overlay */
-
-.hov-img-container {
-    position: relative;
-}
-
-.modal-img {
-    width: 100%;
-    vertical-align: top;
-    opacity: 1;
-    transition: .5s ease;
-    backface-visibility: hidden;
-}
-
-.hov-middle {
-    transition: .5s ease;
-    opacity: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%)
-}
-
-.hov-img-container:hover .modal-img {
-    opacity: 0.6;
-}
-
-.hov-img-container:hover .hov-middle {
-    opacity: 1;
-}
-
-
 /* Colors */
 
-a.list-group-item, button.list-group-item {
-    color: #000;
-    background-color: hsla(197, 24%, 94%, 1);
+.glyphicon-remove {
+    color: red;
 }
 
 
@@ -107,27 +73,11 @@ a.list-group-item, button.list-group-item {
         font-size: 36px;
         letter-spacing: 3px;
     }
-    .user-img {
-        width: 50px;
-        height: 50px;
-    }
-    #btn-home, #btn-login {
-        padding: 8px 16px;
-        font-size: 16px;
-    }
 }
 
 @media only screen and (max-width: 500px) {
     .title {
         font-size: 32px;
         letter-spacing: 2px;
-    }
-    .user-img {
-        width: 30px;
-        height: 30px;
-    }
-    #btn-home, #btn-login {
-        padding: 6px 10px;
-        font-size: 16px;
     }
 }

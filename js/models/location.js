@@ -28,7 +28,7 @@ var mapAddresses = [{
         "lng": -115.1791
     }
 }, {
-    "address": "3377 S Las Vegas Blvd #2001, Las Vegas, NV 89109, USA",
+    "address": "3377 S Las Vegas Blvd, Las Vegas, NV 89109, USA",
     "name": "Madame Tussauds Las Vegas",
     "location": {
         "lat": 36.1213,
@@ -42,14 +42,14 @@ var mapAddresses = [{
         "lng": -115.1721
     }
 }, {
-    "address": "3300 S Las Vegas Blvd, Las Vegas, NV 89109, USA",
+    "address": "2000 S Las Vegas Blvd, Las Vegas, NV 89104, USA",
     "name": "Stratosphere",
     "location": {
         "lat": 36.1472,
         "lng": -115.1560
     }
 }, {
-    "address": "3300 S Las Vegas Blvd, Las Vegas, NV 89109, USA",
+    "address": "Fremont St, Las Vegas, NV 89101, NV 89109, USA",
     "name": "Fremont Street Experience",
     "location": {
         "lat": 36.1708,
