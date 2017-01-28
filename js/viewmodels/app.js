@@ -29,45 +29,15 @@ var ViewModel = function() {
         self.currentFilter("");
         gMaps.showMarkers(locations());
     }
-};
 
-var gMaps = new GoogleMaps();
-var koViewmodel = new ViewModel();
-ko.applyBindings(koViewmodel);
-
-// Get the Google Maps script which callback initializes the #map div
-$.getScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyB_AMvD-EHQYqW9nSE-0MXaKSVCi64ri94&libraries=places&callback=gMaps.initMap")
-    // If successfull then map is initializes.  Load locations. Add markers
-    .done(function(script, textStatus) {
-        console.log("Google Maps API loaded. Adding markers");
-        loadLocations();
-    })
-    // Failed to initialize map. Add alert to page
-    .fail(function(jqxhr, settings, exception) {
-        console.log("Error loading Google Maps API! Exception: " +
-            exception + " Status: " + jqxhr.status);
-        $("#map").append('<div class="alert alert-danger" style="margin-top:200px;" role="alert"><strong>ERROR!</strong> Unable to load Google Maps.</div>');
-        $(".location-list").hide();
-    });
-
-// Load locations from the Model. Add them as markers. Add to array.
-function loadLocations() {
-    if (typeof google === 'object' && typeof google.maps === 'object') {
-        for (var i = 0; i < mapAddresses.length; i++) {
-            koViewmodel.locations.push(gMaps.addMarker(mapAddresses[i]));
-        }
-    }
-};
-
-// When the DOM is ready set the glyphicon for collapse button
-$(document).ready(function() {
-    // Change button text based on hidding or showing the div
+    $('[data-toggle="tooltip"]').tooltip();
     $("#location-div").on("hide.bs.collapse", function() {
         $("#collapse-btn").html('<span class="glyphicon glyphicon-collapse-down"></span> Open');
     });
     $("#location-div").on("show.bs.collapse", function() {
         $("#collapse-btn").html('<span class="glyphicon glyphicon-collapse-up"></span> Close');
     });
+
     // Set a listener on the width for small
     if (matchMedia) {
         var mediaQuery = window.matchMedia("(max-width: 768px)");
@@ -81,5 +51,33 @@ $(document).ready(function() {
         }
     }
 
-    $('[data-toggle="tooltip"]').tooltip();
-});
+
+    // Get the Google Maps script which callback initializes the #map div
+    $.getScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyB_AMvD-EHQYqW9nSE-0MXaKSVCi64ri94&libraries=places&callback=gMaps.initMap")
+        // If successfull then map is initializes.  Load locations. Add markers
+        .done(function(script, textStatus) {
+            console.log("Google Maps API loaded. Adding markers");
+            loadLocations();
+        })
+        // Failed to initialize map. Add alert to page
+        .fail(function(jqxhr, settings, exception) {
+            console.log("Error loading Google Maps API! Exception: " +
+                exception + " Status: " + jqxhr.status);
+            $("#map").append('<div class="alert alert-danger" style="margin-top:200px;" role="alert"><strong>ERROR!</strong> Unable to load Google Maps.</div>');
+            $(".location-list").hide();
+        });
+
+    // Load locations from the Model. Add them as markers. Add to array.
+    function loadLocations() {
+        if (typeof google === 'object' && typeof google.maps === 'object') {
+            for (var i = 0; i < mapAddresses.length; i++) {
+                koViewmodel.locations.push(gMaps.addMarker(mapAddresses[i]));
+            }
+        }
+    };
+};
+
+
+var gMaps = new GoogleMaps();
+var koViewmodel = new ViewModel();
+ko.applyBindings(koViewmodel);
