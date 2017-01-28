@@ -6,7 +6,9 @@ header {
     padding: 0 20px;
     position: absolute;
     top: 0;
+    left: 0;
     z-index: 9998;
+    box-shadow: 8px 8px 5px #888888;
 }
 
 #title {
@@ -14,44 +16,65 @@ header {
     font-family: "Roboto", sans-serif;
     font-weight: 500;
     letter-spacing: 3px;
-    color: hsla(197, 24%, 94%, 1);
-}
-
-.loc-list {
-    font-size: 26px;
-    font-family: "Roboto", sans-serif;
-    letter-spacing: 2px;
+    margin: 15px;
 }
 
 
 /* Main Content Size, Padding, Margins */
 
 html, body {
+    /* Required for Google Map #map to fill screen */
     height: 100%;
     margin: 0;
     padding: 0;
+}
+
+#map {
+    /* Required for Google Map #map to fill screen */
+    height: 100%;
+    position: relative;
+    overflow: hidden;
 }
 
 body {
     font-size: 16px;
     font-family: "Roboto", sans-serif;
     font-weight: 300;
-    /*color: #eee;*/
-    background-color: hsla(197, 24%, 94%, 1);
+}
+
+h2 {
+    font-size: 26px;
+    letter-spacing: 2px;
+    margin-top: 5px;
+}
+
+h3 {
+    font-size: 20px;
+}
+
+h4 {
+    margin-bottom: 5px;
 }
 
 #collapse-btn {
     position: absolute;
     top: 75px;
     z-index: 9999;
-    display: none;
+    box-shadow: 5px 5px 5px #888888;
 }
 
 .location-list {
     position: absolute;
-    top: 80px;
+    top: 75px;
     z-index: 9998;
     background-color: hsla(197, 24%, 94%, 1);
+    border: 2px solid hsla(235, 21%, 21%, 1);
+    box-shadow: 8px 8px 5px #888888;
+    padding: 10px;
+}
+
+.glyphicon-remove {
+    color: red;
 }
 
 #map-div {
@@ -59,32 +82,62 @@ body {
     margin: 10px;
 }
 
-#map {
-    height: 100%;
-    position: relative;
-    overflow: hidden;
+
+/* Loading Circle Animation */
+
+.loader {
+    border: 4px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 4px solid blue;
+    width: 20px;
+    height: 20px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
 }
 
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
 
-/* Colors */
-
-.glyphicon-remove {
-    color: red;
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 
 /* Media Queries */
 
+@media only screen and (min-width: 769px) {
+    /* On large screens hide button and always show locations */
+    #collapse-btn {
+        display: none;
+    }
+    #location-div {
+        display: block !important;
+    }
+}
+
 @media only screen and (max-width: 768px) {
+    /* On small screens locations are hidden, show button instead */
     #title {
         font-size: 32px;
         letter-spacing: 3px;
+        margin: 10px;
     }
-    #filter-icon {
-        display: none;
+    #collapse-btn {
+        top: 60px;
     }
     .location-list {
-        top: 100px;
+        top: 95px;
     }
 }
 
@@ -92,11 +145,12 @@ body {
     #title {
         font-size: 20px;
         letter-spacing: 2px;
+        margin: 5px;
     }
     #collapse-btn {
-        top: 55px;
+        top: 40px;
     }
     .location-list {
-        top: 80px;
+        top: 70px;
     }
 }

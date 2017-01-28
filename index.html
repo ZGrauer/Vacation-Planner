@@ -4,8 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Catalog">
-    <title class="name" data-bind="text: pageTitle"></title>
+    <title>Vacation Planner Map</title>
+    <meta name="description" content="Vacation planning map application. Single-page application featuring a map of a place to visit. Functionality  includs: map markers to identify popular locations or places you’d like to visit, a search function to easily discover these locations, and a listview to support simple browsing of all locations. Implements third-party APIs that provide additional information about each of these locations (such as StreetView images, Wikipedia articles, etc).">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
@@ -13,38 +13,46 @@
     <script src="js/bootstrap.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.1/knockout-min.js" defer></script>
     <script src="js/models/location.js" defer></script>
-    <script src="js/google.js" defer></script>
+    <script src="js/api/wiki.js" defer></script>
+    <script src="js/api/google.js" defer></script>
     <script src="js/viewmodels/app.js" defer></script>
-    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB_AMvD-EHQYqW9nSE-0MXaKSVCi64ri94&callback=gMaps.initMap" async defer></script> -->
 </head>
 
 <body class="container-fluid">
     <header>
         <div class="row">
             <div class="col-xs-12 text-center">
-                <h1 data-bind="text: pageTitle" id="title"></h1>
+                <h1 data-bind="text: pageTitle" id="title">Vacation Planner Map</h1>
             </div>
         </div>
     </header>
+    <!-- Button to collapse #location-div. Only visible at 768px  -->
     <button type="button" id="collapse-btn" class="btn btn-success btn-sm visible-xs hidden-sm hidden-md hidden-lg" data-toggle="collapse" data-target="#location-div">
       <span class="glyphicon glyphicon-collapse-down"></span> Open
     </button>
-    <div class="panel-collapse collapse in" id="location-div">
-        <div class="col-xs-9 col-sm-4 col-md-3 col-lg-3 list-group location-list" >
-            <h2 class="loc-list">Locations</h2>
-            <div class="input-group">
-                <div class="input-group-addon" id="filter-icon"><span class="glyphicon glyphicon-filter"></span></div>
-                <input type="text" id="txt-filter" data-bind="textInput : currentFilter" class="form-control" />
-                <span class="input-group-addon" data-bind="click: clearFilter.bind($data,locations)"><span class="glyphicon glyphicon-remove"></span></span>
-            </div>
-            <div data-bind="foreach: filterLocations">
-                <a href="#" class="list-group-item list-group-item-action" data-bind="click: function(){$parent.clickMarker($data)}">
-                   <span data-bind="text: name"></span>
-               </a>
+    <!-- #location-div collapses at 768px for mobile -->
+    <div class="row">
+        <div class="panel-collapse collapse in" id="location-div">
+            <div class="col-xs-9 col-sm-4 col-md-3 col-xl-3 list-group location-list" >
+                <h2 data-bind="text: locationsTitle">Locations</h2>
+                <!-- filter textbox. realtime updates list-group -->
+                <div class="input-group">
+                    <div class="input-group-addon" id="filter-icon"><span class="glyphicon glyphicon-filter"></span></div>
+                    <input type="text" id="txt-filter" data-bind="textInput : currentFilter" class="form-control" />
+                    <span class="input-group-addon" data-bind="click: clearFilter.bind($data,locations)" data-toggle="tooltip" data-placement="right" title="Clear Filter">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </span>
+                </div>
+                <!-- Build list-group based on current textbox filter -->
+                <div data-bind="foreach: filterLocations">
+                    <a href="#" class="list-group-item list-group-item-action" data-bind="click: function(){$parent.clickMarker($data)}">
+                       <span data-bind="text: name"></span>
+                   </a>
+                </div>
             </div>
         </div>
     </div>
-
+    <!-- Google Maps div. Fullscreen -->
     <div id="map"></div>
 </body>
 </html>

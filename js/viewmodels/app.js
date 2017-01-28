@@ -4,9 +4,10 @@ var ViewModel = function() {
     self.locations = ko.observableArray([]);
     self.currentFilter = ko.observable("");
     self.pageTitle = ko.observable("Vacation Planner Map");
+    self.locationsTitle = ko.observable("Locations");
 
     self.clickMarker = function(marker) {
-        google.maps.event.trigger(marker, 'click');
+        gMaps.clickMarker(marker);
     };
 
     self.filterLocations = ko.computed(function() {
@@ -22,6 +23,7 @@ var ViewModel = function() {
             return filteredList;
         }
     });
+
     self.clearFilter = function(locations) {
         console.dir(locations);
         self.currentFilter("");
@@ -33,12 +35,14 @@ var gMaps = new GoogleMaps();
 var koViewmodel = new ViewModel();
 ko.applyBindings(koViewmodel);
 
-
-$.getScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyB_AMvD-EHQYqW9nSE-0MXaKSVCi64ri94&callback=gMaps.initMap")
+// Get the Google Maps script which callback initializes the #map div
+$.getScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyB_AMvD-EHQYqW9nSE-0MXaKSVCi64ri94&libraries=places&callback=gMaps.initMap")
+    // If successfull then map is initializes.  Load locations. Add markers
     .done(function(script, textStatus) {
         console.log("Google Maps API loaded. Adding markers");
         loadLocations();
     })
+    // Failed to initialize map. Add alert to page
     .fail(function(jqxhr, settings, exception) {
         console.log("Error loading Google Maps API! Exception: " +
             exception + " Status: " + jqxhr.status);
@@ -46,6 +50,7 @@ $.getScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyB_AMvD-EHQYqW9nSE
         $(".location-list").hide();
     });
 
+// Load locations from the Model. Add them as markers. Add to array.
 function loadLocations() {
     if (typeof google === 'object' && typeof google.maps === 'object') {
         for (var i = 0; i < mapAddresses.length; i++) {
@@ -75,4 +80,6 @@ $(document).ready(function() {
             $("#location-div").removeClass("in");
         }
     }
+
+    $('[data-toggle="tooltip"]').tooltip();
 });
