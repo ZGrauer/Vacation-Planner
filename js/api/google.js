@@ -4,6 +4,7 @@ var GoogleMaps = function() {
     this.infowindow;
     this.geocoder;
     this.placeService;
+    this.currMarker;
 
     var wiki = new Wiki();
 
@@ -19,8 +20,9 @@ var GoogleMaps = function() {
         infowindow = new google.maps.InfoWindow();
         google.maps.event.addListener(map, 'click', function() {
             infowindow.close();
+            self.stopCurrMarkerAnimation();
         });
-    }
+    };
 
     this.addMarker = function(place) {
         var marker = new google.maps.Marker({
@@ -34,8 +36,12 @@ var GoogleMaps = function() {
 
         // Add a listener for a click on the new marker
         // Build and open an InfoWindow
-        google.maps.event.addListener(marker, 'click', (function(marker) {
+        google.maps.event.addListener(marker, 'click', (function(marker, map) {
             return function() {
+                //Stop any previous marker from bouncing
+                self.stopCurrMarkerAnimation();
+                // Set new active marker.  Used to track bouncing
+                self.currMarker = marker;
                 // Metadata URL for Google streetview
                 var streetviewMetaDataUrl = 'https://maps.googleapis.com/maps/api/streetview/metadata?size=400x400&location=' +
                     marker.position.lat() + ', ' +
@@ -51,12 +57,16 @@ var GoogleMaps = function() {
                     '<div id="streetview-img-div">Getting Google Streetview pic...<div class="loader"></div></div>';
                 // Set standard content for InfoWindow before ajax & open
                 infowindow.setContent(InfoWindowContent);
+                infowindow.setAnchor(marker);
                 infowindow.open(map, marker);
-                // Marker bounces 3 times
+                // Make selected marker bounce
                 marker.setAnimation(google.maps.Animation.BOUNCE);
-                setTimeout(function() {
-                    marker.setAnimation(null);
-                }, 2250);
+                // Add listener for InfoWindow close to stop bounce
+                google.maps.event.addListener(infowindow, 'closeclick', (function(marker) {
+                    return function() {
+                        self.stopCurrMarkerAnimation();
+                    };
+                })(marker));
 
                 // Get Google Place details & add to info window
                 self.setPlaceDetails(marker);
@@ -67,25 +77,32 @@ var GoogleMaps = function() {
                 // Ajax call to get Wiki articles and set in Info window
                 wiki.getWikiData(marker.name);
             }
-        })(marker));
+        })(marker, map));
         return marker;
-    }
+    };
 
     this.clickMarker = function(marker) {
         google.maps.event.trigger(marker, 'click');
-    }
+    };
 
     this.hideMarkers = function(markers) {
         for (var i = 0; i < markers.length; i++) {
             markers[i].setVisible(false);
         }
-    }
+    };
 
     this.showMarkers = function(markers) {
         for (var i = 0; i < markers.length; i++) {
             markers[i].setVisible(true);
         }
-    }
+    };
+
+    // Stops any active marker from bouncing
+    this.stopCurrMarkerAnimation = function(marker) {
+        if (self.currMarker) {
+            self.currMarker.setAnimation(null);
+        }
+    };
 
     this.closeInfoWindow = function() {
         infowindow.close();
@@ -99,7 +116,6 @@ var GoogleMaps = function() {
                 // Google has valid image for address.
                 // Get image and update InfoWindow
                 if (json.status === "OK") {
-                    console.dir(json);
                     var streetviewUrl = 'https://maps.googleapis.com/maps/api/streetview?size=300x300&location=' +
                         //marker.position.lat() + ', ' +
                         //marker.position.lng() +
@@ -152,7 +168,6 @@ var GoogleMaps = function() {
 
         function detailsCallback(place, status) {
             if (status == google.maps.places.PlacesServiceStatus.OK) {
-                console.log("PLace Details");
                 console.dir(place);
                 $("#place-div").html("");
                 if (place.icon) {
@@ -162,21 +177,27 @@ var GoogleMaps = function() {
                     $("#place-div").append("<h4>Google Place Details</h4>");
                 }
                 if (place.website) {
-                    $("#place-div").append('<br><b>Website: </b><a target="_blank" href="' + place.website + '">' +
-                        place.website + '</a>');
+                    // RegExp match used to display URL.  Some were causing scolling InfoWindow
+                    $("#place-div").append('<br><b><span class="glyphicon glyphicon-link"></span>: </b><a target="_blank" href="' + place.website + '">' +
+                        place.website.match(/^(http[s]?:\/)?\/?([^:\/\s]+)/g) + '</a>');
                 }
                 if (place.formatted_phone_number) {
-                    $("#place-div").append("<br><b>Phone: </b>" + place.formatted_phone_number);
+                    $("#place-div").append('<br><b><span class="glyphicon glyphicon-phone-alt"></span>: </b>' + place.formatted_phone_number);
                 }
                 if (place.rating) {
-                    $("#place-div").append("<br><b>Rating: </b>" + place.rating);
+                    $("#place-div").append('<br><b><span class="glyphicon glyphicon-star"></span>: </b>' + place.rating);
+                }
+                if (typeof(place.opening_hours.open_now) === "boolean" && place.opening_hours.open_now === false) {
+                    $("#place-div").append('<br><b><span class="glyphicon glyphicon-time"></span></span>: </b>Closed now');
+                } else if (place.opening_hours.open_now === true) {
+                    $("#place-div").append('<br><b><span class="glyphicon glyphicon-time"></span></span>: </b>Open now');
                 }
             } else {
                 $("#streetview-img-div").attr("role", "alert").addClass("alert alert-danger").html('' +
                     '<strong>ERROR!</strong> Failed to get Google Place details </div>');
             }
         }
-    }
+    };
 };
 
 // Is called by Google for Auth on map API err.

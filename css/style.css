@@ -53,7 +53,8 @@ h3 {
 }
 
 h4 {
-    margin-bottom: 5px;
+    font-size: 16px;
+    margin: 15px 0 5px 0;
 }
 
 #collapse-btn {
@@ -80,6 +81,10 @@ h4 {
 #map-div {
     padding: 0 0 10px 0;
     margin: 10px;
+}
+
+#streetview-img-div {
+    padding-top: 15px;
 }
 
 

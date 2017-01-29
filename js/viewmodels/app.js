@@ -6,6 +6,17 @@ var ViewModel = function() {
     self.pageTitle = ko.observable("Vacation Planner Map");
     self.locationsTitle = ko.observable("Locations");
 
+    // Load locations from the Model. Add them as markers. Add to array.
+    self.loadLocations = function() {
+        if (typeof google === 'object' && typeof google.maps === 'object') {
+            var currMarker = "";
+            for (var i = 0; i < mapAddresses.length; i++) {
+                currMarker = gMaps.addMarker(mapAddresses[i]);
+                koViewmodel.locations.push(currMarker);
+            }
+        }
+    };
+
     self.clickMarker = function(marker) {
         gMaps.clickMarker(marker);
     };
@@ -28,7 +39,7 @@ var ViewModel = function() {
         console.dir(locations);
         self.currentFilter("");
         gMaps.showMarkers(locations());
-    }
+    };
 
     $('[data-toggle="tooltip"]').tooltip();
     $("#location-div").on("hide.bs.collapse", function() {
@@ -57,7 +68,7 @@ var ViewModel = function() {
         // If successfull then map is initializes.  Load locations. Add markers
         .done(function(script, textStatus) {
             console.log("Google Maps API loaded. Adding markers");
-            loadLocations();
+            self.loadLocations();
         })
         // Failed to initialize map. Add alert to page
         .fail(function(jqxhr, settings, exception) {
@@ -67,14 +78,7 @@ var ViewModel = function() {
             $(".location-list").hide();
         });
 
-    // Load locations from the Model. Add them as markers. Add to array.
-    function loadLocations() {
-        if (typeof google === 'object' && typeof google.maps === 'object') {
-            for (var i = 0; i < mapAddresses.length; i++) {
-                koViewmodel.locations.push(gMaps.addMarker(mapAddresses[i]));
-            }
-        }
-    };
+
 };
 
 
