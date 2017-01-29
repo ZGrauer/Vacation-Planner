@@ -1,3 +1,6 @@
+/**
+ * @description Represents a Google Maps API instance, including Streetview and Places data
+ */
 var GoogleMaps = function() {
     var self = this;
     this.map;
@@ -5,9 +8,17 @@ var GoogleMaps = function() {
     this.geocoder;
     this.placeService;
     this.currMarker;
+    // Enter your personal Google API key here
+    // https://developers.google.com/maps/documentation/javascript/get-api-key
+    this.googleApiKey = "AIzaSyB_AMvD-EHQYqW9nSE-0MXaKSVCi64ri94"
 
     var wiki = new Wiki();
 
+    /**
+     * @description Initializes the Map in the #map div, Places service, and infoWindow.  This is run as a callback on the google <script> tag
+     * @param None
+     * @returns None
+     */
     this.initMap = function() {
         map = new google.maps.Map($("#map")[0], {
             zoom: 13,
@@ -24,6 +35,14 @@ var GoogleMaps = function() {
         });
     };
 
+    /**
+     * @description Creates a Marker instance for the Location.
+     * Adds a click listener on the new marker to open an info window.
+     * The listener builds content for the infowindow.
+     * @summary Adds a Marker to the map
+     * @param {Object} Location instance from the model. Passed from ViewModel
+     * @returns {Object} a new google.maps.Marker instance.
+     */
     this.addMarker = function(place) {
         var marker = new google.maps.Marker({
             map: map,
@@ -46,7 +65,7 @@ var GoogleMaps = function() {
                 var streetviewMetaDataUrl = 'https://maps.googleapis.com/maps/api/streetview/metadata?size=400x400&location=' +
                     marker.position.lat() + ', ' +
                     marker.position.lng() +
-                    '&key=AIzaSyB_AMvD-EHQYqW9nSE-0MXaKSVCi64ri94';
+                    '&key=' + self.googleApiKey;
 
 
                 // Set default InfoWindow data. This will be displated even if call to google isn't finished
@@ -116,12 +135,11 @@ var GoogleMaps = function() {
                 // Google has valid image for address.
                 // Get image and update InfoWindow
                 if (json.status === "OK") {
+                    // Get image based on metadata lat and lng
                     var streetviewUrl = 'https://maps.googleapis.com/maps/api/streetview?size=300x300&location=' +
-                        //marker.position.lat() + ', ' +
-                        //marker.position.lng() +
                         json.location.lat + ', ' +
                         json.location.lng +
-                        '&key=AIzaSyB_AMvD-EHQYqW9nSE-0MXaKSVCi64ri94';
+                        '&key=' + self.googleApiKey;
                     $("#streetview-img-div").html('<img class="img-fluid" src="' + streetviewUrl + '">');
                     console.log("Got Streetview image.  Updating InfoWindow...");
                 } else {
@@ -178,6 +196,7 @@ var GoogleMaps = function() {
                 }
                 if (place.website) {
                     // RegExp match used to display URL.  Some were causing scolling InfoWindow
+                    // Displayed link only shows "https://www.example.com, href is full path"
                     $("#place-div").append('<br><b><span class="glyphicon glyphicon-link"></span>: </b><a target="_blank" href="' + place.website + '">' +
                         place.website.match(/^(http[s]?:\/)?\/?([^:\/\s]+)/g) + '</a>');
                 }
@@ -187,14 +206,34 @@ var GoogleMaps = function() {
                 if (place.rating) {
                     $("#place-div").append('<br><b><span class="glyphicon glyphicon-star"></span>: </b>' + place.rating);
                 }
+
+                // See if the place is open or closed now
                 if (typeof(place.opening_hours.open_now) === "boolean" && place.opening_hours.open_now === false) {
                     $("#place-div").append('<br><b><span class="glyphicon glyphicon-time"></span></span>: </b>Closed now');
+
                 } else if (place.opening_hours.open_now === true) {
                     $("#place-div").append('<br><b><span class="glyphicon glyphicon-time"></span></span>: </b>Open now');
+                }
+                // Get the place's hours of business today.
+                var hoursToday = getOpenHours(place.opening_hours.weekday_text);
+                if (hoursToday) {
+                    $("#place-div").append("<br>" + hoursToday);
                 }
             } else {
                 $("#streetview-img-div").attr("role", "alert").addClass("alert alert-danger").html('' +
                     '<strong>ERROR!</strong> Failed to get Google Place details </div>');
+            }
+
+            function getOpenHours(placeHours) {
+                var weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+                var weekday = weekdays[new Date().getDay()];
+                if (placeHours) {
+                    for (var i = 0; i < placeHours.length; i++) {
+                        if (placeHours[i].includes(weekday)) {
+                            return placeHours[i].slice(placeHours[i].indexOf(":") + 1);
+                        }
+                    }
+                }
             }
         }
     };

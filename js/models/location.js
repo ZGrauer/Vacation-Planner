@@ -1,6 +1,11 @@
 var Location = function(data) {
     this.name = ko.observable(data.name);
     this.address = ko.observable(data.address);
+    this.city = ko.observable(data.city);
+    this.state = ko.observable(data.state);
+    this.zip = ko.observable(data.zip);
+    this.country = ko.observable(data.country);
+    this.location = ko.observable(data.location);
 };
 
 var mapAddresses = [{

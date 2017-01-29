@@ -12,7 +12,7 @@ var ViewModel = function() {
             var currMarker = "";
             for (var i = 0; i < mapAddresses.length; i++) {
                 currMarker = gMaps.addMarker(mapAddresses[i]);
-                koViewmodel.locations.push(currMarker);
+                self.locations.push(currMarker);
             }
         }
     };
@@ -83,5 +83,4 @@ var ViewModel = function() {
 
 
 var gMaps = new GoogleMaps();
-var koViewmodel = new ViewModel();
-ko.applyBindings(koViewmodel);
+ko.applyBindings(new ViewModel());
