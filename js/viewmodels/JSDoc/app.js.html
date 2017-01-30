@@ -1,13 +1,41 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: app.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: app.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * @description Represents a Knockoutjs ViewModel instance
  */
 var ViewModel = function() {
     var self = this;
 
     self.locations = ko.observableArray([]); // Array of location
-    self.currentFilter = ko.observable(''); // Current filter on UI
-    self.pageTitle = ko.observable('Vacation Planner Map'); //Header title
-    self.locationsTitle = ko.observable('Locations'); //Locations div heading
+    self.currentFilter = ko.observable(""); // Current filter on UI
+    self.pageTitle = ko.observable("Vacation Planner Map"); //Header title
+    self.locationsTitle = ko.observable("Locations"); //Locations div heading
 
 
     /**
@@ -15,8 +43,8 @@ var ViewModel = function() {
      * Locations are all saved to the locations observableArray
      */
     self.loadLocations = function() {
-        if (typeof google === 'object' && typeof google.maps === 'object') {
-            for (var i = 0; i < mapAddresses.length; i++) {
+        if (typeof google === 'object' &amp;&amp; typeof google.maps === 'object') {
+            for (var i = 0; i &lt; mapAddresses.length; i++) {
                 var currLocation = new Location(mapAddresses[i]);
                 currLocation.marker = gMaps.addMarker(currLocation);
                 self.locations.push(currLocation);
@@ -63,7 +91,7 @@ var ViewModel = function() {
      */
     self.getMarkers = function(locationList) {
         var markers = [];
-        for (var i = 0; i < locationList.length; i++) {
+        for (var i = 0; i &lt; locationList.length; i++) {
             markers.push(locationList[i].marker);
         }
         return markers;
@@ -82,40 +110,40 @@ var ViewModel = function() {
     // Enable Bootstrap tooltips
     $('[data-toggle="tooltip"]').tooltip();
     // Toggle the collapse button text on Bootstrap events
-    $('#location-div').on('hide.bs.collapse', function() {
-        $('#collapse-btn').html('<span class="glyphicon glyphicon-collapse-down"></span> Open');
+    $("#location-div").on("hide.bs.collapse", function() {
+        $("#collapse-btn").html('&lt;span class="glyphicon glyphicon-collapse-down">&lt;/span> Open');
     });
-    $('#location-div').on('show.bs.collapse', function() {
-        $('#collapse-btn').html('<span class="glyphicon glyphicon-collapse-up"></span> Close');
+    $("#location-div").on("show.bs.collapse", function() {
+        $("#collapse-btn").html('&lt;span class="glyphicon glyphicon-collapse-up">&lt;/span> Close');
     });
 
     // Set a listener on the width for small screens
     if (matchMedia) {
-        var mediaQuery = window.matchMedia('(max-width: 768px)');
+        var mediaQuery = window.matchMedia("(max-width: 768px)");
         mediaQuery.addListener(WidthChange);
         WidthChange(mediaQuery);
     }
     // Hide the locations div when the screen is 768px or less
     function WidthChange(mediaQuery) {
         if (mediaQuery.matches) {
-            $('#location-div').removeClass('in');
+            $("#location-div").removeClass("in");
         }
     }
 
 
     // Get the Google Maps script. The callback initializes the #map div
-    $.getScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyB_AMvD-EHQYqW9nSE-0MXaKSVCi64ri94&libraries=places&callback=gMaps.initMap')
-        // If successfull then map is initialized.  Load locations & add markers.
+    $.getScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyB_AMvD-EHQYqW9nSE-0MXaKSVCi64ri94&amp;libraries=places&amp;callback=gMaps.initMap")
+        // If successfull then map is initialized.  Load locations &amp; add markers.
         .done(function(script, textStatus) {
-            console.log('Google Maps API loaded. Adding markers');
+            console.log("Google Maps API loaded. Adding markers");
             self.loadLocations();
         })
         // Failed to initialize map. Add Bootstrap alert to page.
         .fail(function(jqxhr, settings, exception) {
-            console.log('Error loading Google Maps API! Exception: ' +
-                exception + ' Status: ' + jqxhr.status);
-            $('#map').append('<div class="alert alert-danger" style="margin-top:200px;" role="alert"><strong>ERROR!</strong> Unable to load Google Maps.</div>');
-            $('.location-list').hide();
+            console.log("Error loading Google Maps API! Exception: " +
+                exception + " Status: " + jqxhr.status);
+            $("#map").append('&lt;div class="alert alert-danger" style="margin-top:200px;" role="alert">&lt;strong>ERROR!&lt;/strong> Unable to load Google Maps.&lt;/div>');
+            $(".location-list").hide();
         });
 
 
@@ -124,3 +152,26 @@ var ViewModel = function() {
 
 var gMaps = new GoogleMaps();
 ko.applyBindings(new ViewModel());
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#ViewModel">ViewModel</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Mon Jan 30 2017 07:48:45 GMT-0600 (Central Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

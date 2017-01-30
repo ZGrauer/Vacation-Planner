@@ -1,4 +1,32 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: google.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: google.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * @description Represents a Google Maps API instance, including Streetview and Places data
  */
 var GoogleMaps = function() {
@@ -15,10 +43,10 @@ var GoogleMaps = function() {
     var wiki = new Wiki();
 
     /**
-     * @description Initializes the Map in the #map div, Places service, and infoWindow.  This is run as a callback on the google <script> tag
+     * @description Initializes the Map in the #map div, Places service, and infoWindow.  This is run as a callback on the google &lt;script> tag
      */
     this.initMap = function() {
-        map = new google.maps.Map($('#map')[0], {
+        map = new google.maps.Map($("#map")[0], {
             zoom: 13,
             center: {
                 lat: 36.1213,
@@ -49,7 +77,7 @@ var GoogleMaps = function() {
             title: location.name()
         });
         marker.name = location.name();
-        marker.address = location.address() + ', ' + location.city() + ', ' + location.state() + ' ' + location.zip() + ', ' + location.country();
+        marker.address = location.address() + ", " + location.city() + ", " + location.state() + " " + location.zip() + ", " + location.country();
 
         // Add a listener for a click on the new marker
         // Build and open an InfoWindow
@@ -60,19 +88,19 @@ var GoogleMaps = function() {
                 // Set new active marker.  Used to track bouncing
                 self.currMarker = marker;
                 // Metadata URL for Google streetview
-                var streetviewMetaDataUrl = 'https://maps.googleapis.com/maps/api/streetview/metadata?size=400x400&location=' +
+                var streetviewMetaDataUrl = 'https://maps.googleapis.com/maps/api/streetview/metadata?size=400x400&amp;location=' +
                     marker.position.lat() + ', ' +
                     marker.position.lng() +
-                    '&key=' + self.googleApiKey;
+                    '&amp;key=' + self.googleApiKey;
 
 
                 // Set default InfoWindow data. This will be displated even if call to google isn't finished
-                var InfoWindowContent = '<h3>' + marker.name + '</h3>' +
+                var InfoWindowContent = '&lt;h3>' + marker.name + '&lt;/h3>' +
                     marker.address +
-                    '<div id="place-div"><h4>Google Place Details</h4>Getting Google info...<div class="loader"></div></div>' +
-                    '<div id="wiki-div"><h4>Wiki Articles</h4><br>Getting articles...<div class="loader"></div></div>' +
-                    '<div id="streetview-img-div">Getting Google Streetview pic...<div class="loader"></div></div>';
-                // Set standard content for InfoWindow before ajax & open
+                    '&lt;div id="place-div">&lt;h4>Google Place Details&lt;/h4>Getting Google info...&lt;div class="loader">&lt;/div>&lt;/div>' +
+                    '&lt;div id="wiki-div">&lt;h4>Wiki Articles&lt;/h4>&lt;br>Getting articles...&lt;div class="loader">&lt;/div>&lt;/div>' +
+                    '&lt;div id="streetview-img-div">Getting Google Streetview pic...&lt;div class="loader">&lt;/div>&lt;/div>';
+                // Set standard content for InfoWindow before ajax &amp; open
                 infowindow.setContent(InfoWindowContent);
                 infowindow.setAnchor(marker);
                 infowindow.open(map, marker);
@@ -85,10 +113,10 @@ var GoogleMaps = function() {
                     };
                 })(marker));
 
-                // Get Google Place details & add to info window
+                // Get Google Place details &amp; add to info window
                 self.setPlaceDetails(marker);
 
-                // Ajax call to get & set Streetview img
+                // Ajax call to get &amp; set Streetview img
                 self.setStreetviewImg(streetviewMetaDataUrl);
 
                 // Ajax call to get Wiki articles and set in Info window
@@ -114,7 +142,7 @@ var GoogleMaps = function() {
      * @param  {Array.Object} markers google.maps.Marker instances
      */
     this.hideMarkers = function(markers) {
-        for (var i = 0; i < markers.length; i++) {
+        for (var i = 0; i &lt; markers.length; i++) {
             markers[i].setVisible(false);
         }
     };
@@ -125,7 +153,7 @@ var GoogleMaps = function() {
      * @param  {Array.Object} markers google.maps.Marker instances
      */
     this.showMarkers = function(markers) {
-        for (var i = 0; i < markers.length; i++) {
+        for (var i = 0; i &lt; markers.length; i++) {
             markers[i].setVisible(true);
         }
     };
@@ -162,29 +190,29 @@ var GoogleMaps = function() {
             .done(function(json) {
                 // Google has valid image for address.
                 // Get image and update InfoWindow
-                if (json.status === 'OK') {
+                if (json.status === "OK") {
                     // Get image based on metadata lat and lng
-                    var streetviewUrl = 'https://maps.googleapis.com/maps/api/streetview?size=300x300&location=' +
+                    var streetviewUrl = 'https://maps.googleapis.com/maps/api/streetview?size=300x300&amp;location=' +
                         json.location.lat + ', ' +
                         json.location.lng +
-                        '&key=' + self.googleApiKey;
-                    $('#streetview-img-div').html('<img class="img-fluid" src="' + streetviewUrl + '">');
-                    console.log('Got Streetview image.  Updating InfoWindow...');
+                        '&amp;key=' + self.googleApiKey;
+                    $("#streetview-img-div").html('&lt;img class="img-fluid" src="' + streetviewUrl + '">');
+                    console.log("Got Streetview image.  Updating InfoWindow...");
                 } else {
                     // Status is an error.  https://developers.google.com/maps/documentation/streetview/metadata#status-codes
-                    console.log('Streetview status: ' + json.status);
-                    console.log('Streetview error: ' + json.error_message);
+                    console.log("Streetview status: " + json.status);
+                    console.log("Streetview error: " + json.error_message);
 
-                    $('#streetview-img-div').attr('role', 'alert').addClass('alert alert-danger').html('' +
-                        '<strong>ERROR!</strong> Unable to get Streetview image.<br>' +
-                        json.status + ' </div>');
+                    $("#streetview-img-div").attr("role", "alert").addClass("alert alert-danger").html('' +
+                        '&lt;strong>ERROR!&lt;/strong> Unable to get Streetview image.&lt;br>' +
+                        json.status + ' &lt;/div>');
                 }
             })
             .fail(function() {
                 // Ajax for Streetview metadata failed.
-                console.log('ERROR! Unable to get streetview image.');
-                $('#streetview-img-div').attr('role', 'alert').addClass('alert alert-danger').html('' +
-                    '<strong>ERROR!</strong> Failed to get Streetview data. </div>');
+                console.log("ERROR! Unable to get streetview image.");
+                $("#streetview-img-div").attr("role", "alert").addClass("alert alert-danger").html('' +
+                    '&lt;strong>ERROR!&lt;/strong> Failed to get Streetview data. &lt;/div>');
             });
     };
 
@@ -198,8 +226,8 @@ var GoogleMaps = function() {
         // Setup places request
         var request = {
             location: {
-                'lat': marker.position.lat(),
-                'lng': marker.position.lng()
+                "lat": marker.position.lat(),
+                "lng": marker.position.lng()
             },
             radius: '500',
             query: marker.name
@@ -224,8 +252,8 @@ var GoogleMaps = function() {
                 };
                 placeService.getDetails(currPlace, detailsCallback);
             } else {
-                $('#streetview-img-div').attr('role', 'alert').addClass('alert alert-danger').html('' +
-                    '<strong>ERROR!</strong> Failed to get Google Place ID </div>');
+                $("#streetview-img-div").attr("role", "alert").addClass("alert alert-danger").html('' +
+                    '&lt;strong>ERROR!&lt;/strong> Failed to get Google Place ID &lt;/div>');
             }
         }
 
@@ -237,41 +265,41 @@ var GoogleMaps = function() {
          */
         function detailsCallback(place, status) {
             if (status == google.maps.places.PlacesServiceStatus.OK) {
-                $('#place-div').html('');
+                $("#place-div").html("");
                 if (place.icon) {
-                    $('#place-div').append('<h4>Google Place Details <img src="' + place.icon +
-                        '"height="15" width="15" /></h4>');
+                    $("#place-div").append('&lt;h4>Google Place Details &lt;img src="' + place.icon +
+                        '"height="15" width="15" />&lt;/h4>');
                 } else {
-                    $('#place-div').append('<h4>Google Place Details</h4>');
+                    $("#place-div").append("&lt;h4>Google Place Details&lt;/h4>");
                 }
                 if (place.website) {
                     // RegExp match used to display URL.  Some were causing scolling InfoWindow
-                    // Displayed link only shows 'https://www.example.com', href is full path
-                    $('#place-div').append('<br><b><span class="glyphicon glyphicon-link"></span>: </b><a target="_blank" href="' + place.website + '">' +
-                        place.website.match(/^(http[s]?:\/)?\/?([^:\/\s]+)/g) + '</a>');
+                    // Displayed link only shows "https://www.example.com, href is full path"
+                    $("#place-div").append('&lt;br>&lt;b>&lt;span class="glyphicon glyphicon-link">&lt;/span>: &lt;/b>&lt;a target="_blank" href="' + place.website + '">' +
+                        place.website.match(/^(http[s]?:\/)?\/?([^:\/\s]+)/g) + '&lt;/a>');
                 }
                 if (place.formatted_phone_number) {
-                    $('#place-div').append('<br><b><span class="glyphicon glyphicon-phone-alt"></span>: </b>' + place.formatted_phone_number);
+                    $("#place-div").append('&lt;br>&lt;b>&lt;span class="glyphicon glyphicon-phone-alt">&lt;/span>: &lt;/b>' + place.formatted_phone_number);
                 }
                 if (place.rating) {
-                    $('#place-div').append('<br><b><span class="glyphicon glyphicon-star"></span>: </b>' + place.rating);
+                    $("#place-div").append('&lt;br>&lt;b>&lt;span class="glyphicon glyphicon-star">&lt;/span>: &lt;/b>' + place.rating);
                 }
 
                 // See if the place is open or closed now
-                if (typeof(place.opening_hours.open_now) === 'boolean' && place.opening_hours.open_now === false) {
-                    $('#place-div').append('<br><b><span class="glyphicon glyphicon-time"></span></span>: </b>Closed now');
+                if (typeof(place.opening_hours.open_now) === "boolean" &amp;&amp; place.opening_hours.open_now === false) {
+                    $("#place-div").append('&lt;br>&lt;b>&lt;span class="glyphicon glyphicon-time">&lt;/span>&lt;/span>: &lt;/b>Closed now');
 
                 } else if (place.opening_hours.open_now === true) {
-                    $('#place-div').append('<br><b><span class="glyphicon glyphicon-time"></span></span>: </b>Open now');
+                    $("#place-div").append('&lt;br>&lt;b>&lt;span class="glyphicon glyphicon-time">&lt;/span>&lt;/span>: &lt;/b>Open now');
                 }
                 // Get the place's hours of business today.
                 var hoursToday = getOpenHours(place.opening_hours.weekday_text);
                 if (hoursToday) {
-                    $('#place-div').append('<br>' + hoursToday);
+                    $("#place-div").append("&lt;br>" + hoursToday);
                 }
             } else {
-                $('#place-div').attr('role', 'alert').addClass('alert alert-danger').html('' +
-                    '<strong>ERROR!</strong> Failed to get Google Place details </div>');
+                $("#streetview-img-div").attr("role", "alert").addClass("alert alert-danger").html('' +
+                    '&lt;strong>ERROR!&lt;/strong> Failed to get Google Place details &lt;/div>');
             }
 
 
@@ -281,12 +309,12 @@ var GoogleMaps = function() {
              * @return {string} Place hours of business today.
              */
             function getOpenHours(placeHours) {
-                var weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+                var weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
                 var weekday = weekdays[new Date().getDay()];
                 if (placeHours) {
-                    for (var i = 0; i < placeHours.length; i++) {
+                    for (var i = 0; i &lt; placeHours.length; i++) {
                         if (placeHours[i].includes(weekday)) {
-                            return placeHours[i].slice(placeHours[i].indexOf(':') + 1);
+                            return placeHours[i].slice(placeHours[i].indexOf(":") + 1);
                         }
                     }
                 }
@@ -301,6 +329,29 @@ var GoogleMaps = function() {
  * Appends a Bootstrap alert to the #map div on any auth errors.
  */
 function gm_authFailure() {
-    alert('Unable to load Google Maps API. Authentication error');
-    $('#map').append('<div class="alert alert-danger" style="margin-top:200px;" role="alert"><strong>ERROR!</strong> Unable to load Google Maps.</div>');
+    alert("Unable to load Google Maps API. Authentication error");
+    $("#map").append('&lt;div class="alert alert-danger" style="margin-top:200px;" role="alert">&lt;strong>ERROR!&lt;/strong> Unable to load Google Maps.&lt;/div>');
 };
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addMarker">addMarker</a></li><li><a href="global.html#clickMarker">clickMarker</a></li><li><a href="global.html#closeInfoWindow">closeInfoWindow</a></li><li><a href="global.html#gm_authFailure">gm_authFailure</a></li><li><a href="global.html#GoogleMaps">GoogleMaps</a></li><li><a href="global.html#hideMarkers">hideMarkers</a></li><li><a href="global.html#initMap">initMap</a></li><li><a href="global.html#setPlaceDetails">setPlaceDetails</a></li><li><a href="global.html#setStreetviewImg">setStreetviewImg</a></li><li><a href="global.html#showMarkers">showMarkers</a></li><li><a href="global.html#stopCurrMarkerAnimation">stopCurrMarkerAnimation</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Mon Jan 30 2017 07:49:04 GMT-0600 (Central Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
