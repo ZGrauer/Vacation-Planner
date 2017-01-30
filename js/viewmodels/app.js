@@ -46,7 +46,9 @@ var ViewModel = function() {
             return self.locations();
         } else {
             var filteredList = ko.utils.arrayFilter(self.locations(), function(location) {
-                return location.name().toLowerCase().indexOf(self.currentFilter().toLowerCase()) >= 0;
+                return (location.name().toLowerCase().indexOf(self.currentFilter().toLowerCase()) >= 0) ||
+                    (location.city().toLowerCase().indexOf(self.currentFilter().toLowerCase()) >= 0) ||
+                    (location.zip().toLowerCase().indexOf(self.currentFilter().toLowerCase()) >= 0);
             });
             gMaps.hideMarkers(self.getMarkers(self.locations()));
             gMaps.closeInfoWindow();
