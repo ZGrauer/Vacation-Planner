@@ -94,7 +94,23 @@ var Location = function(data) {
             self.getInfoWindowContent();
         });
     };
+
+
+    /**
+     * @description Sets the icon for the locations map marker.
+     * If no URL was passed, it uses the default red icon.
+     * @param  {type} iconUrl URL for icon image to use on Marker
+     */
+    self.setIcon = function(iconUrl) {
+        iconUrl = iconUrl || {
+            url: 'http://mt.googleapis.com/vt/icon/name=icons/spotlight/spotlight-poi.png&amp;scale=1'
+        };
+        self.marker.setIcon(iconUrl);
+    };
 };
+
+
+
 
 
 /**

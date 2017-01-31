@@ -36,6 +36,17 @@ var ViewModel = function() {
     };
 
 
+
+    /**
+     * @description Changes the marker icon to blue when hovering on the list item
+     * @param  {Object} location Location being hovered from list group
+     * @param  {Object} data     Knockout event data
+     */
+    self.hoverLocationLink = function(location, data) {
+        data.type == "mouseover" ? location.setIcon("http://mt.google.com/vt/icon?color=ff004C13&name=icons/spotlight/spotlight-waypoint-blue.png") : location.setIcon();
+    };
+
+
     /**
      * @description Generates a list of locations to display in the UI list-group.
      * If a filter isn't used, then returns all locations.

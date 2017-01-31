@@ -34,7 +34,7 @@ To add, update, or delete locations from the map, open `.\js\models\location.js`
 
 ***All HTML used is contained in file `index.html`, which can be found in the root directory.  This is the file to serve and open to run the application.***
 
-Data in the HTML file is bound using Knockoutjs and the code in the ViewModel. The ViewModel (`.\js\viewmodels\app.js`) initializes the map and binds the data between JavaScript and HTML. This line at the end of the `app.js` file is what causes the magic to happen. 
+Data in the HTML file is bound using Knockoutjs and the code in the ViewModel. The ViewModel (`.\js\viewmodels\app.js`) initializes the map and binds the data between JavaScript and HTML. This line at the end of the `app.js` file is what causes the magic to happen.
 
 ```javascript
 ko.applyBindings(new ViewModel());
@@ -58,7 +58,7 @@ $.getScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyB_AMvD-EHQYqW9nSE
     });
 ```
 
-Styling of the UI can be changed using CSS in file `.\css\style.css`. Comments within this file denote groupings and organization of code. The other `*.css` files are required by Bootstrap, which is used for various UI features and can be left alone. Use `.\css\style.css` to override any Bootstrap stylings.
+Styling of the UI can be changed using CSS in file `.\css\style.css`. Comments within this file denote groupings and organization of code. The other `*.css` files are required by Bootstrap, which is used for UI features such as tooltips, alerts, layout and can be left alone. Use `.\css\style.css` to override any Bootstrap stylings.
 
 
 
