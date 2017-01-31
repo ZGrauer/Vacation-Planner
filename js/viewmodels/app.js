@@ -18,9 +18,11 @@ var ViewModel = function() {
         if (typeof google === 'object' && typeof google.maps === 'object') {
             for (var i = 0; i < mapAddresses.length; i++) {
                 var currLocation = new Location(mapAddresses[i]);
-                currLocation.marker = gMaps.addMarker(currLocation);
+                currLocation.marker.name = currLocation.name();
+                currLocation.addMarkerListener();
                 self.locations.push(currLocation);
             }
+            console.log('Markers added to map.  Ready...');
         }
     };
 
@@ -69,7 +71,7 @@ var ViewModel = function() {
             markers.push(locationList[i].marker);
         }
         return markers;
-    }
+    };
 
 
     /**

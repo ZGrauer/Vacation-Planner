@@ -22,7 +22,8 @@ header {
 
 /* Main Content Size, Padding, Margins */
 
-html, body {
+html,
+body {
     /* Required for Google Map #map to fill screen */
     height: 100%;
     margin: 0;
