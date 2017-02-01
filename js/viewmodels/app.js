@@ -93,8 +93,9 @@ var ViewModel = function() {
         var cities = ko.utils.arrayMap(self.filterLocations(), function(location) {
             return location.city();
         });
-
-        cities = ko.utils.arrayGetDistinctValues(cities).sort();
+        console.dir(cities);
+        cities = ko.utils.arrayGetDistinctValues(cities);
+        console.dir(cities);
 
         var cityLocationArray = [];
         for (var i = 0; i < cities.length; i++) {
