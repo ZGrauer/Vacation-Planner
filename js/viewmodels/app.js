@@ -51,7 +51,9 @@ var ViewModel = function() {
     self.hoverLocationLink = function(location, data) {
         if (data.type == "mouseover") {
             location.setIcon("http://mt.google.com/vt/icon?color=ff004C13&name=icons/spotlight/spotlight-waypoint-blue.png");
-            gMaps.map.panTo(location.marker.getPosition());
+            setTimeout(function() {
+                gMaps.map.panTo(location.marker.getPosition());
+            }, 350);
         } else {
             location.setIcon();
         }

@@ -72,7 +72,10 @@ h4 {
     background-color: hsla(197, 24%, 94%, 1);
     border: 2px solid hsla(235, 21%, 21%, 1);
     box-shadow: 8px 8px 5px #888888;
-    padding: 10px;
+    padding: 10px 10px -75px 10px;
+    margin-bottom: 0;
+    height: calc(100% - 75px);
+    overflow: scroll;
 }
 
 .glyphicon-remove {
@@ -144,6 +147,7 @@ h4 {
     }
     .location-list {
         top: 95px;
+        height: calc(100% - 95px);
     }
 }
 
@@ -159,5 +163,6 @@ h4 {
     }
     .location-list {
         top: 70px;
+        height: calc(100% - 70px);
     }
 }

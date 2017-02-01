@@ -33,23 +33,27 @@
     <!-- #location-div collapses at 768px for mobile -->
     <div class="row">
         <div class="panel-collapse collapse in" id="location-div">
-            <div class="col-xs-9 col-sm-4 col-md-3 col-xl-3 list-group location-list" >
+            <div class="col-xs-9 col-sm-4 col-md-3 col-xl-3 list-group location-list scroll-div">
                 <h2 data-bind="text: locationsTitle">Locations</h2>
                 <!-- filter textbox. realtime updates list-group -->
                 <div class="input-group">
                     <div class="input-group-addon" id="filter-icon"><span class="glyphicon glyphicon-filter"></span></div>
-                    <input type="text" id="txt-filter" data-bind="textInput : currentFilter" class="form-control" placeholder="Name, city, or zip" >
+                    <input type="text" id="txt-filter" data-bind="textInput : currentFilter" class="form-control" placeholder="Name, city, or zip">
                     <span class="input-group-addon" data-bind="click: clearFilter.bind($data,locations)" data-toggle="tooltip" data-placement="right" title="Clear Filter">
                         <span class="glyphicon glyphicon-remove"></span>
                     </span>
                 </div>
                 <!-- Build list-group based on current textbox filter -->
                 <div data-bind="foreach: distinctCities">
-                    <h3 data-bind="text: $data[0].city"></h3>
-                    <div data-bind="foreach: $data">
-                        <a href="#" class="list-group-item list-group-item-action" data-bind="click: function(){$root.clickMarker($data)}, event: { mouseover: $root.hoverLocationLink, mouseout:  $root.hoverLocationLink}">
-                           <span data-bind="text: name"></span>
-                       </a>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 data-bind="text: $data[0].city"></h3>
+                        </div>
+                        <div data-bind="foreach: $data">
+                            <a href="#" class="list-group-item list-group-item-action" data-bind="click: function(){$root.clickMarker($data)}, event: { mouseover: $root.hoverLocationLink, mouseout:  $root.hoverLocationLink}">
+                                <span data-bind="text: name"></span>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -58,4 +62,5 @@
     <!-- Google Maps div. Fullscreen -->
     <main id="map"></main>
 </body>
+
 </html>

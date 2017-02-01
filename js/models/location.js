@@ -26,7 +26,8 @@ var Location = function(data) {
     // Computed observable for all Info Window HTML
     self.infoWindowContent = ko.computed(function() {
         return '<h3>' + self.name() + '</h3>' +
-            self.address() +
+            self.address() + '<br>' +
+            self.city() + ', ' + self.state() + ' ' + self.zip() +
             self.placeHtmlData() +
             self.wikiHtmlData() +
             self.streetViewData();
@@ -260,14 +261,69 @@ var mapAddresses = [{
         "lng": -115.135276
     }
 }, {
-    "address": "903 Parkway #128",
+    "address": "650 Parkway",
     "city": "Gatlinburg",
     "state": "TN",
     "zip": "37738",
     "country": "USA",
     "name": "Ole Smoky Distillery",
     "location": {
-        "lat": 35.711088,
-        "lng": -83.519261
+        "lat": 35.712451,
+        "lng": -83.515268
+    }
+}, {
+    "address": "805 Parkway",
+    "city": "Gatlinburg",
+    "state": "TN",
+    "zip": "37738",
+    "country": "USA",
+    "name": "Sugarlands Distilling Company",
+    "location": {
+        "lat": 35.711606,
+        "lng": -83.518727
+    }
+}, {
+    "address": "914 Parkway",
+    "city": "Gatlinburg",
+    "state": "TN",
+    "zip": "37738",
+    "country": "USA",
+    "name": "Hollywood Star Cars Museum",
+    "location": {
+        "lat": 35.710571,
+        "lng": -83.519130
+    }
+}, {
+    "address": "519 Parkway",
+    "city": "Gatlinburg",
+    "state": "TN",
+    "zip": "37738",
+    "country": "USA",
+    "name": "Doc Collier Moonshine",
+    "location": {
+        "lat": 35.714017,
+        "lng": -83.511033
+    }
+}, {
+    "address": "542 Parkway",
+    "city": "Gatlinburg",
+    "state": "TN",
+    "zip": "37738",
+    "country": "USA",
+    "name": "Cooter's Place in Gatlinburg",
+    "location": {
+        "lat": 35.713349,
+        "lng": -83.511323
+    }
+}, {
+    "address": "2041 Parkway",
+    "city": "Pigeon Forge",
+    "state": "TN",
+    "zip": "37863",
+    "country": "USA",
+    "name": "Krystal",
+    "location": {
+        "lat": 35.823125,
+        "lng": -83.576768
     }
 }];
