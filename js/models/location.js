@@ -259,4 +259,15 @@ var mapAddresses = [{
         "lat": 36.176942,
         "lng": -115.135276
     }
+}, {
+    "address": "903 Parkway #128",
+    "city": "Gatlinburg",
+    "state": "TN",
+    "zip": "37738",
+    "country": "USA",
+    "name": "Ole Smoky Distillery",
+    "location": {
+        "lat": 35.711088,
+        "lng": -83.519261
+    }
 }];

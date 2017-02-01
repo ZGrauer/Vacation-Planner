@@ -8,6 +8,12 @@ var ViewModel = function() {
     self.currentFilter = ko.observable(''); // Current filter on UI
     self.pageTitle = ko.observable('Vacation Planner Map'); //Header title
     self.locationsTitle = ko.observable('Locations'); //Locations div heading
+    self.sortedlocations = ko.computed(function() {
+        return self.locations().sort(function(l, r) {
+            return (l.city() === r.city()) ? (l.name() > r.name() ? 1 : -1) : (l.name() > r.name() ? 1 : -1);
+        });
+    });
+
 
 
     /**
@@ -61,9 +67,9 @@ var ViewModel = function() {
      */
     self.filterLocations = ko.computed(function() {
         if (!self.currentFilter()) {
-            return self.locations();
+            return self.sortedlocations();
         } else {
-            var filteredList = ko.utils.arrayFilter(self.locations(), function(location) {
+            var filteredList = ko.utils.arrayFilter(self.sortedlocations(), function(location) {
                 return (location.name().toLowerCase().indexOf(self.currentFilter().toLowerCase()) >= 0) ||
                     (location.city().toLowerCase().indexOf(self.currentFilter().toLowerCase()) >= 0) ||
                     (location.zip().toLowerCase().indexOf(self.currentFilter().toLowerCase()) >= 0);
@@ -73,6 +79,29 @@ var ViewModel = function() {
             gMaps.showMarkers(self.getMarkers(filteredList));
             return filteredList;
         }
+    });
+
+
+    /**
+     * @description Generates a list of locations to display in the UI list-group.
+     * @returns {Array.Array} array of location objects arrays.
+     * The nested array has locations sorted by city so they can be displayed sorted on the UI.
+     */
+    self.distinctCities = ko.computed(function() {
+        var cities = ko.utils.arrayMap(self.filterLocations(), function(location) {
+            return location.city();
+        });
+
+        cities = ko.utils.arrayGetDistinctValues(cities).sort();
+
+        var cityLocationArray = [];
+        for (var i = 0; i < cities.length; i++) {
+            var cityLocations = ko.utils.arrayFilter(self.filterLocations(), function(location) {
+                return (location.city().toLowerCase().indexOf(cities[i].toLowerCase()) >= 0);
+            });
+            cityLocationArray.push(cityLocations);
+        }
+        return cityLocationArray;
     });
 
 
