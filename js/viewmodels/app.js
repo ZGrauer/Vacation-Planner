@@ -43,7 +43,12 @@ var ViewModel = function() {
      * @param  {Object} data     Knockout event data
      */
     self.hoverLocationLink = function(location, data) {
-        data.type == "mouseover" ? location.setIcon("http://mt.google.com/vt/icon?color=ff004C13&name=icons/spotlight/spotlight-waypoint-blue.png") : location.setIcon();
+        if (data.type == "mouseover") {
+            location.setIcon("http://mt.google.com/vt/icon?color=ff004C13&name=icons/spotlight/spotlight-waypoint-blue.png");
+            gMaps.map.panTo(location.marker.getPosition());
+        } else {
+            location.setIcon();
+        }
     };
 
 
