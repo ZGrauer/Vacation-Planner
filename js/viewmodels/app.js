@@ -17,18 +17,30 @@ var ViewModel = function() {
 
 
     /**
-     * @description Loads locations from the Model and adds them as markers.
+     * @description Loads locations from 'locations.json' file
+     * Creates Location instances in the Model and adds them as markers.
      * Locations are all saved to the locations observableArray
      */
     self.loadLocations = function() {
         if (typeof google === 'object' && typeof google.maps === 'object') {
-            for (var i = 0; i < mapAddresses.length; i++) {
-                var currLocation = new Location(mapAddresses[i]);
-                currLocation.marker.name = currLocation.name();
-                currLocation.addMarkerListener();
-                self.locations.push(currLocation);
-            }
-            console.log('Markers added to map.  Ready...');
+            // Read location data from json file
+            $.getJSON("locations.json")
+                .done(
+                    function(json) {
+                        for (var i = 0; i < json.locations.length; i++) {
+                            var currLocation = new Location(json.locations[i]);
+                            currLocation.marker.name = currLocation.name();
+                            currLocation.addMarkerListener();
+                            self.locations.push(currLocation);
+                        }
+                        console.log('Markers added to map.  Ready...');
+                    }
+                )
+                .fail(function() {
+                    $('#map').append('<div class="alert alert-danger" style="margin-top:200px;" role="alert"><strong>ERROR!</strong> Unable to load location data.</div>');
+                    $('.location-list').hide();
+                });
+
         }
     };
 
@@ -94,9 +106,8 @@ var ViewModel = function() {
         var cities = ko.utils.arrayMap(self.filterLocations(), function(location) {
             return location.city();
         });
-        console.dir(cities);
+
         cities = ko.utils.arrayGetDistinctValues(cities);
-        console.dir(cities);
 
         var cityLocationArray = [];
         for (var i = 0; i < cities.length; i++) {
