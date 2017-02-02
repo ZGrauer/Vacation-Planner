@@ -15,21 +15,23 @@ A single-page application featuring a map of a future vacation spot. The map is 
 
 ## Development
 
-To add, update, or delete locations from the map, open `.\js\models\location.js` and update the `mapAddresses` object.  This array of objects is the data source for the application. The lat and lng is used to obtain more accurate pictures from Streetview.  This data can be obtained from Google Maps by right-clicking on the map and selecting `What's here?`.
+To add, update, or delete locations from the map, open `locations.json` in the root directory and update the objects within.  This file is the data source for the application. The lat and lng is used to obtain more accurate pictures from Streetview, like a specific point in the building.  This data can be obtained from Google Maps by right-clicking on the map and selecting `What's here?`.
 
 ```javascript
-    var mapAddresses = [{
-        "address": "4510 Paradise Rd",
-        "city": "Las Vegas",
-        "state": "NV",
-        "zip": "89169",
-        "country": "USA",
-        "name": "Hofbrauhaus",
-        "location": {
-            "lat": 36.107736,
-            "lng": -115.151616
-        }
-    },
+{
+   "locations":[
+      {
+         "address":"4510 Paradise Rd",
+         "city":"Las Vegas",
+         "state":"NV",
+         "zip":"89169",
+         "country":"USA",
+         "name":"Hofbrauhaus",
+         "location":{
+            "lat":36.107736,
+            "lng":-115.151616
+         }
+      },
 ```
 
 ***All HTML used is contained in file `index.html`, which can be found in the root directory.  This is the file to serve and open to run the application.***
