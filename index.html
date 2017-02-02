@@ -47,10 +47,10 @@
                 <div data-bind="foreach: distinctCities">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 data-bind="text: $data[0].city"></h3>
+                            <h3 data-bind="text: $data[0].city() + ', ' + $data[0].state()"></h3>
                         </div>
                         <div data-bind="foreach: $data">
-                            <a href="#" class="list-group-item list-group-item-action" data-bind="click: function(){$root.clickMarker($data)}, event: { mouseover: $root.hoverLocationLink, mouseout:  $root.hoverLocationLink}">
+                            <a href="#" class="list-group-item list-group-item-action" data-bind="click: function(){$root.clickMarker($data)}, event: { mouseover: $root.hoverLocationLink, mouseout:  $root.hoverLocationLink}, attr: { id: $index() }">
                                 <span data-bind="text: name"></span>
                             </a>
                         </div>

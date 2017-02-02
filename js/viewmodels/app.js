@@ -42,7 +42,7 @@ var ViewModel = function() {
     };
 
 
-
+    var panMap;
     /**
      * @description Changes the marker icon to blue when hovering on the list item
      * @param  {Object} location Location being hovered from list group
@@ -50,11 +50,12 @@ var ViewModel = function() {
      */
     self.hoverLocationLink = function(location, data) {
         if (data.type == "mouseover") {
-            location.setIcon("http://mt.google.com/vt/icon?color=ff004C13&name=icons/spotlight/spotlight-waypoint-blue.png");
-            setTimeout(function() {
+            panMap = setTimeout(function() {
                 gMaps.map.panTo(location.marker.getPosition());
-            }, 350);
+            }, 500)
+            location.setIcon("http://mt.google.com/vt/icon?color=ff004C13&name=icons/spotlight/spotlight-waypoint-blue.png");
         } else {
+            clearTimeout(panMap);
             location.setIcon();
         }
     };
